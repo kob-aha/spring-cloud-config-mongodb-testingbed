@@ -1,0 +1,2 @@
+app:
+  message: "Hello from Spring cloud config native profile"
