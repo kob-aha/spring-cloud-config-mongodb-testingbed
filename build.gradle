@@ -15,16 +15,18 @@ subprojects {
 
 	repositories {
 		mavenCentral()
+		maven {
+			url "https://oss.jfrog.org/artifactory/libs-snapshot"
+		}
 	}
 
 	ext {
 		set('springCloudVersion', "Greenwich.SR3")
 	}
 
-//	dependencies {
-//		implementation 'org.springframework.cloud:spring-cloud-config-server'
-//		testImplementation 'org.springframework.boot:spring-boot-starter-test'
-//	}
+	dependencies {
+		testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	}
 
 	dependencyManagement {
 		imports {
