@@ -1,3 +1,8 @@
 dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.cloud:spring-cloud-starter-config'
+}
+
+springBoot {
+	mainClassName = 'edu.ka.testingbed.cloudconfigmongo.client.ClientApplication'
 }
