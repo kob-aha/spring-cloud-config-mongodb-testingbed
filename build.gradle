@@ -14,6 +14,7 @@ subprojects {
 	sourceCompatibility = '1.8'
 
 	repositories {
+		mavenLocal()
 		mavenCentral()
 		maven {
 			url "https://oss.jfrog.org/artifactory/libs-snapshot"
@@ -25,13 +26,27 @@ subprojects {
 	}
 
 	dependencies {
-		implementation 'org.springframework.cloud:spring-cloud-starter-bus-amqp'
+//		implementation 'org.springframework.cloud:spring-cloud-starter-bus-amqp'
+		implementation 'com.maciejwalkowiak:spring-cloud-stream-binder-sqs:1.1.0.BUILD-SNAPSHOT'
+		implementation 'org.springframework.cloud:spring-cloud-bus'
 		testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	}
 
 	dependencyManagement {
 		imports {
 			mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+		}
+	}
+
+	configurations.all {
+		resolutionStrategy {
+
+			// Force dependency due to conflicts
+			force 'org.objenesis:objenesis:2.6'
+
+			// fail eagerly on version conflict (includes transitive dependencies)
+			// e.g. multiple different versions of the same dependency (group and name are equal)
+			failOnVersionConflict()
 		}
 	}
 }

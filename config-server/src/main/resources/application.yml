@@ -3,6 +3,16 @@ logging:
   level:
     root: INFO
 
+cloud:
+  aws:
+    credentials:
+      useDefaultAwsCredentialsChain: true
+    stack:
+      auto: false
+    region:
+      static: us-east-2
+      auto: false
+
 spring:
   data:
     mongodb:
