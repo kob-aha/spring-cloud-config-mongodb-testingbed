@@ -1,4 +1,3 @@
----
 logging:
   level:
     root: INFO
@@ -14,16 +13,57 @@ cloud:
       auto: false
 
 spring:
-  data:
-    mongodb:
-      uri: mongodb://localhost:27017/config
   cloud:
     config:
       server:
+        jdbc:
+          order: 1
+          sql: SELECT PROP_KEY, VALUE from PROPERTIES where APPLICATION=? and PROFILE=? and LABEL=?
         native:
           search-locations: classpath:/config
+
+    stream:
+      defaultBinder: rabbit
+
+  datasource:
+    url: jdbc:mysql://rds-mysql.ckxtss3omjud.us-east-2.rds.amazonaws.com:3306/config
+    username: admin
+    # Password can be supplied using "--spring.datasource.password=PASS" as a program argument
+
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/config
+
   profiles:
-    active: native
+    active: jdbc, sqs
 server:
   port: 8081
 
+---
+
+spring:
+  profiles: "!mongo"
+
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration
+      - org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration
+
+---
+
+spring:
+  profiles: "!jdbc"
+
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+      - org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration
+
+---
+
+spring:
+  profiles: sqs
+
+  cloud:
+    stream:
+      defaultBinder: sqs

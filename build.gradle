@@ -26,7 +26,7 @@ subprojects {
 	}
 
 	dependencies {
-//		implementation 'org.springframework.cloud:spring-cloud-starter-bus-amqp'
+		implementation 'org.springframework.cloud:spring-cloud-starter-bus-amqp'
 		implementation 'com.maciejwalkowiak:spring-cloud-stream-binder-sqs:1.1.0.BUILD-SNAPSHOT'
 		implementation 'org.springframework.cloud:spring-cloud-bus'
 		testImplementation 'org.springframework.boot:spring-boot-starter-test'
